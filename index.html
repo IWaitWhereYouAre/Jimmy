@@ -3,222 +3,249 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Yo Jimmy! ✨</title>
+  <title>A Refreshing Note for Jimmy</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Caprasimo&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Quicksand:wght@500;700&family=Gaegu:wght@700&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --bg: #e0f7f1; /* Fresh Mint */
-      --primary: #4ecdc4; /* Teal */
-      --secondary: #ffbe0b; /* Mango Yellow */
-      --accent: #ff006e; /* Pop of color */
-      --text: #264653;
-      --card: #ffffff;
+      --sunny: #FFD93D;
+      --mint: #6BCB77;
+      --berry: #FF6B6B;
+      --sky: #4D96FF;
+      --white: #ffffff;
+      --text: #2D3436;
     }
 
-    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    * { box-sizing: border-box; }
     
     body {
       margin: 0;
-      background-color: var(--bg);
-      background-image: 
-        radial-gradient(circle at 20% 20%, #ffbe0b22 0%, transparent 20%),
-        radial-gradient(circle at 80% 80%, #4ecdc422 0%, transparent 20%);
-      font-family: 'Quicksand', sans-serif;
-      color: var(--text);
+      height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      min-height: 100vh;
+      background: #f0f9ff;
+      background: radial-gradient(circle at top left, #fff9e6, #e6f7ff);
+      font-family: 'Quicksand', sans-serif;
       overflow: hidden;
+      color: var(--text);
     }
 
-    /* Floating Bubbly Shapes */
+    /* Gimmick: Floating Bubbles */
     .bubble {
       position: absolute;
-      background: white;
+      background: rgba(255, 255, 255, 0.6);
+      border: 2px solid rgba(255, 255, 255, 0.8);
       border-radius: 50%;
-      opacity: 0.5;
-      z-index: -1;
-      animation: float 8s infinite ease-in-out;
+      pointer-events: none;
+      z-index: 100;
+      animation: rise 2s ease-out forwards;
     }
 
-    @keyframes float {
-      0%, 100% { transform: translate(0, 0); }
-      50% { transform: translate(20px, -40px); }
+    @keyframes rise {
+      0% { transform: translateY(0) scale(0.5); opacity: 1; }
+      100% { transform: translateY(-200px) scale(1.5); opacity: 0; }
     }
 
     .container {
       width: 90%;
-      max-width: 400px;
+      max-width: 420px;
       position: relative;
     }
 
-    /* The Arcade-Style Card */
+    /* Refreshing Card Style */
     .card {
-      background: var(--card);
-      border: 6px solid var(--text);
-      border-radius: 40px;
+      background: var(--white);
+      border-radius: 30px;
       padding: 40px 30px;
-      box-shadow: 12px 12px 0px var(--primary);
+      box-shadow: 0 20px 0px rgba(77, 150, 255, 0.1), 0 40px 80px rgba(0,0,0,0.05);
+      border: 4px solid #f0f0f0;
       text-align: center;
-      transform: scale(0);
       transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       position: relative;
+      overflow: hidden;
     }
 
-    .card.is-open {
-      transform: scale(1);
+    .card:hover {
+      transform: translateY(-5px) rotate(1deg);
     }
 
-    /* The Happy Cat "Seal" */
-    .cat-seal {
-      width: 140px;
-      height: 140px;
-      background: var(--secondary);
-      border: 6px solid var(--text);
+    /* The "Seal" is a juicy orange slice */
+    .orange-seal {
+      width: 100px;
+      height: 100px;
+      background: #FF9F43;
       border-radius: 50%;
-      margin: 0 auto;
+      margin: 0 auto 20px;
       cursor: pointer;
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
-      position: relative;
+      font-size: 3rem;
+      border: 6px solid #FFCA2C;
+      box-shadow: 0 10px 0 #ee8e2e;
       transition: all 0.2s;
-      box-shadow: 0 8px 0 var(--text);
       z-index: 10;
+      position: relative;
     }
 
-    .cat-seal:hover {
-      transform: translateY(-5px) rotate(-5deg);
-      box-shadow: 0 13px 0 var(--text);
+    .orange-seal:active {
+      transform: scale(0.9) translateY(5px);
+      box-shadow: 0 2px 0 #ee8e2e;
     }
 
-    .cat-seal:active {
-      transform: translateY(4px);
-      box-shadow: 0 2px 0 var(--text);
+    .orange-seal::after {
+      content: 'Pop me!';
+      position: absolute;
+      top: -30px;
+      font-family: 'Gaegu', cursive;
+      font-size: 1.2rem;
+      color: #FF9F43;
+      animation: bounce 1s infinite alternate;
     }
 
-    .cat-face { font-size: 50px; line-height: 1; margin-bottom: 5px;}
-    .cat-seal span { font-weight: 700; font-size: 14px; text-transform: uppercase; }
+    @keyframes bounce { from { transform: translateY(0); } to { transform: translateY(-5px); } }
 
-    /* Text Styles */
+    .content {
+      display: none;
+      animation: fadeIn 0.8s ease;
+    }
+
+    @keyframes fadeIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+
     h1 {
-      font-family: 'Caprasimo', cursive;
+      font-family: 'Fredoka', sans-serif;
+      color: var(--mint);
       font-size: 2.2rem;
-      color: var(--accent);
-      margin: 0 0 15px 0;
-      line-height: 1;
+      margin: 10px 0;
     }
 
     p {
-      font-size: 1.2rem;
-      font-weight: 700;
-      line-height: 1.5;
-      margin-bottom: 25px;
+      font-size: 1.15rem;
+      line-height: 1.6;
+      color: #636e72;
+      font-weight: 500;
     }
 
-    .btn-group {
+    .tag {
+      display: inline-block;
+      padding: 6px 15px;
+      background: #e1f5fe;
+      color: var(--sky);
+      border-radius: 99px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 15px;
+    }
+
+    .footer-btns {
+      margin-top: 30px;
       display: flex;
       gap: 10px;
       justify-content: center;
     }
 
-    .action-btn {
-      background: var(--primary);
-      border: 3px solid var(--text);
-      padding: 10px 20px;
+    .btn {
+      padding: 12px 25px;
       border-radius: 15px;
-      font-weight: 700;
+      border: none;
+      font-family: 'Fredoka', sans-serif;
+      font-weight: 600;
       cursor: pointer;
-      box-shadow: 4px 4px 0 var(--text);
-      transition: 0.1s;
+      transition: all 0.2s;
     }
 
-    .action-btn:active {
-      transform: translate(2px, 2px);
-      box-shadow: 0px 0px 0 var(--text);
+    .btn-copy { background: var(--mint); color: white; }
+    .btn-copy:hover { background: #5bab66; transform: scale(1.05); }
+
+    /* Custom Toast */
+    #toast {
+      position: fixed;
+      bottom: -100px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--text);
+      color: white;
+      padding: 15px 30px;
+      border-radius: 20px;
+      transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      z-index: 1000;
     }
 
-    /* Confetti Gimmick */
-    .confetti {
-      position: absolute;
-      width: 10px;
-      height: 10px;
-      pointer-events: none;
-    }
-
-    .hidden { display: none; }
+    #toast.show { bottom: 40px; }
   </style>
 </head>
 <body>
 
-  <div class="bubble" style="width: 80px; height: 80px; top: 10%; left: 10%;"></div>
-  <div class="bubble" style="width: 120px; height: 120px; bottom: 15%; right: 5%; animation-delay: 2s;"></div>
-
   <div class="container">
-    <div class="cat-seal" id="seal" onclick="popOpen()">
-      <div class="cat-face">😸</div>
-      <span>Open Me!</span>
-    </div>
+    <div class="card" id="mainCard">
+      <div id="closedState">
+        <div class="orange-seal" onclick="popOpen()">🍊</div>
+        <h1>Hey Jimmy!</h1>
+        <p>A little zest for your day is waiting inside...</p>
+      </div>
 
-    <div class="card" id="card">
-      <h1>YO JIMMY!</h1>
-      <p>
-        Just popping in to say you're doing great! 🚀<br><br>
-        Keep being awesome. If you're bored or stressed, give me a shout! 
-      </p>
-      
-      <div class="btn-group">
-        <button class="action-btn" onclick="copyNote()">COPY TEXT</button>
-        <button class="action-btn" style="background: var(--secondary);" onclick="location.reload()">RE-POP</button>
+      <div id="openedState" class="content">
+        <span class="tag">Friendship Fuel ⚡️</span>
+        <h1>Rooting for you!</h1>
+        <p>
+          Just a quick "you got this" from your friend.<br>
+          Don't forget to take a breather and stay hydrated.<br>
+          <b>I'm always in your corner!</b>
+        </p>
+        
+        <div class="footer-btns">
+          <button class="btn btn-copy" onclick="copyText()">Copy Vibes</button>
+        </div>
       </div>
     </div>
   </div>
 
+  <div id="toast">Vibes Copied! ✨</div>
+
   <script>
     function popOpen() {
-      // Hide seal, show card
-      document.getElementById('seal').style.display = 'none';
-      document.getElementById('card').classList.add('is-open');
-      
-      // Gimmick: Confetti Explosion
-      createConfetti();
-    }
-
-    function createConfetti() {
-      for (let i = 0; i < 40; i++) {
-        const confetti = document.createElement('div');
-        confetti.className = 'confetti';
-        
-        // Random shapes and colors
-        const colors = ['#ffbe0b', '#fb5607', '#ff006e', '#8338ec', '#3a86ff', '#4ecdc4'];
-        confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
-        
-        // Random position and animation
-        const destinationX = (Math.random() - 0.5) * 600;
-        const destinationY = (Math.random() - 0.5) * 600;
-        
-        document.body.appendChild(confetti);
-        
-        const animation = confetti.animate([
-          { transform: 'translate(-50%, -50%) scale(1)', opacity: 1, left: '50%', top: '50%' },
-          { transform: `translate(${destinationX}px, ${destinationY}px) scale(0) rotate(360deg)`, opacity: 0, left: '50%', top: '50%' }
-        ], {
-          duration: 1000 + Math.random() * 1000,
-          easing: 'cubic-bezier(0, .9, .57, 1)'
-        });
-
-        animation.onfinish = () => confetti.remove();
+      // Gimmick: Create Bubbles
+      for(let i=0; i<15; i++) {
+        createBubble();
       }
+
+      // Transition
+      document.getElementById('closedState').style.display = 'none';
+      const opened = document.getElementById('openedState');
+      opened.style.display = 'block';
+      
+      // Fun card jiggle
+      const card = document.getElementById('mainCard');
+      card.style.borderColor = '#6BCB77';
     }
 
-    function copyNote() {
-      navigator.clipboard.writeText("Yo Jimmy! Just popping in to say you're doing great! Keep being awesome.");
-      alert("Text copied! 🤘");
+    function createBubble() {
+      const bubble = document.createElement('div');
+      bubble.className = 'bubble';
+      const size = Math.random() * 30 + 10 + 'px';
+      bubble.style.width = size;
+      bubble.style.height = size;
+      
+      // Position bubbles around the click area
+      const rect = document.querySelector('.orange-seal').getBoundingClientRect();
+      bubble.style.left = (rect.left + rect.width/2 + (Math.random() - 0.5) * 100) + 'px';
+      bubble.style.top = (rect.top + rect.height/2) + 'px';
+      
+      document.body.appendChild(bubble);
+      setTimeout(() => bubble.remove(), 2000);
+    }
+
+    function copyText() {
+      const text = "Hey Jimmy! Rooting for you! Don't forget to take a breather. I'm always in your corner!";
+      navigator.clipboard.writeText(text);
+      
+      const toast = document.getElementById('toast');
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2500);
     }
   </script>
 </body>
