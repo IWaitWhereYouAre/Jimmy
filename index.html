@@ -6,352 +6,444 @@
   <title>A Note for Jimmy</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,400&family=Inter:wght@300;500&family=Parisienne&display=swap" rel="stylesheet">
 
   <style>
     :root{
-      /* Luxury-neutral palette */
-      --bgTop: #fbfaf7;
-      --bgBot: #ffffff;
-      --ink: #1f1f1f;
-      --muted: rgba(31,31,31,.62);
+      --bg1:#fbf7f4;
+      --bg2:#fff;
 
-      --paper: #fffdf9;
-      --paperEdge: rgba(0,0,0,.07);
+      --ink:#262626;
+      --muted:rgba(38,38,38,.68);
 
-      --env: #f2ece4;
-      --env2:#ebe2d7;
-      --envLine: rgba(0,0,0,.08);
+      --paper1:#fffdf9;
+      --paper2:#fff7ef;
+      --paper-edge:rgba(0,0,0,.08);
 
-      --accent: #c9ae86;     /* champagne gold */
-      --accent2:#9fb6aa;     /* muted sage */
+      --env1:#f6e9e2;
+      --env2:#efd7cc;
+      --env-line:rgba(0,0,0,.10);
 
-      --seal: #bba488;       /* soft wax taupe */
-      --seal2:#a79074;
+      --accent:#d7a36c;      /* soft gold */
+      --rose:#c77a83;        /* rosy */
+      --wax1:#a64a5a;
+      --wax2:#8f3243;
 
-      --shadow1: 0 22px 70px rgba(0,0,0,.10);
-      --shadow2: 0 14px 40px rgba(0,0,0,.08);
+      --shadow: 0 26px 70px rgba(0,0,0,.12);
+      --shadow-soft: 0 16px 44px rgba(0,0,0,.09);
 
-      --r: 22px;
+      --radius: 26px;
     }
 
     *{ box-sizing:border-box; }
-    html, body{ height:100%; }
+    html,body{ height:100%; }
 
     body{
       margin:0;
-      background:
-        radial-gradient(900px 560px at 18% 20%, rgba(159,182,170,.12), transparent 60%),
-        radial-gradient(980px 620px at 82% 82%, rgba(201,174,134,.14), transparent 62%),
-        linear-gradient(180deg, var(--bgTop), var(--bgBot));
-      color: var(--ink);
+      color:var(--ink);
       font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
       display:grid;
       place-items:center;
       overflow:hidden;
+      background:
+        radial-gradient(900px 650px at 16% 10%, rgba(199,122,131,.13), transparent 60%),
+        radial-gradient(900px 650px at 86% 85%, rgba(215,163,108,.16), transparent 58%),
+        radial-gradient(600px 420px at 55% 45%, rgba(255,255,255,.65), transparent 60%),
+        linear-gradient(180deg, var(--bg1), var(--bg2));
     }
 
-    /* A very subtle grain = expensive, not “effect-y” */
+    /* Soft vignette + grain (very subtle, elegant) */
     body::before{
       content:"";
       position:fixed;
+      inset:-80px;
+      pointer-events:none;
+      background:
+        radial-gradient(closest-side at 50% 45%, transparent 55%, rgba(0,0,0,.06) 100%),
+        repeating-linear-gradient(0deg, rgba(0,0,0,.010) 0 1px, transparent 1px 8px);
+      opacity:.55;
+      filter: blur(.2px);
+      mix-blend-mode: multiply;
+    }
+
+    /* Sparkles, but more “luxury confetti” than “sweet” */
+    .sparkle{
+      position:fixed;
       inset:0;
       pointer-events:none;
-      opacity:.25;
+      opacity:.52;
       background-image:
-        radial-gradient(circle at 10% 20%, rgba(0,0,0,.05) 0 1px, transparent 2px),
-        radial-gradient(circle at 30% 80%, rgba(0,0,0,.04) 0 1px, transparent 2px),
-        radial-gradient(circle at 70% 30%, rgba(0,0,0,.04) 0 1px, transparent 2px),
-        radial-gradient(circle at 85% 75%, rgba(0,0,0,.05) 0 1px, transparent 2px);
-      filter: blur(.2px);
-      transform: scale(1.2);
+        radial-gradient(circle at 12% 24%, rgba(215,163,108,.34) 0 2px, transparent 3px),
+        radial-gradient(circle at 30% 68%, rgba(199,122,131,.26) 0 2px, transparent 3px),
+        radial-gradient(circle at 75% 22%, rgba(215,163,108,.22) 0 1.8px, transparent 3px),
+        radial-gradient(circle at 70% 78%, rgba(199,122,131,.18) 0 1.6px, transparent 3px),
+        radial-gradient(circle at 50% 48%, rgba(215,163,108,.14) 0 1.4px, transparent 3px);
+      filter: blur(.15px);
+      animation: drift 10s ease-in-out infinite alternate;
+    }
+    @keyframes drift{
+      from{ transform: translateY(-8px) }
+      to{ transform: translateY(12px) }
     }
 
     .wrap{
-      width: min(560px, 92vw);
-      position: relative;
+      width:min(600px, 92vw);
+      position:relative;
       perspective: 1200px;
     }
 
+    /* ===== Envelope ===== */
     .envelope{
-      position: relative;
-      border-radius: var(--r);
-      box-shadow: var(--shadow1);
-      background: linear-gradient(180deg, var(--env), var(--env2));
-      border: 1px solid var(--envLine);
+      position:relative;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      background: linear-gradient(180deg, var(--env1), var(--env2));
+      border: 1px solid var(--env-line);
       overflow:hidden;
+      transform: translateY(0);
+      transition: transform .7s cubic-bezier(.16,1,.3,1);
+      isolation:isolate;
     }
 
-    /* Clean, minimal texture */
+    /* Border glow / rim highlight */
+    .envelope::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      border-radius: var(--radius);
+      pointer-events:none;
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.65),
+        inset 0 -1px 0 rgba(0,0,0,.04);
+      opacity:.9;
+    }
+
+    /* Texture + soft sheen */
     .envelope::before{
       content:"";
       position:absolute;
       inset:0;
+      background-image:
+        repeating-linear-gradient(0deg, rgba(0,0,0,.016) 0 1px, transparent 1px 9px),
+        radial-gradient(circle at 24% 18%, rgba(255,255,255,.55), transparent 60%),
+        radial-gradient(circle at 75% 78%, rgba(255,255,255,.28), transparent 62%),
+        radial-gradient(circle at 60% 40%, rgba(215,163,108,.09), transparent 60%);
+      opacity:.55;
       pointer-events:none;
-      opacity:.45;
-      background:
-        radial-gradient(320px 220px at 20% 25%, rgba(255,255,255,.55), transparent 68%),
-        radial-gradient(340px 230px at 85% 75%, rgba(255,255,255,.38), transparent 70%),
-        repeating-linear-gradient(0deg, rgba(0,0,0,.012) 0 1px, transparent 1px 10px);
+      z-index:0;
     }
 
     /* Flap */
     .flap{
       position:absolute;
       top:0; left:0; right:0;
-      height: 62%;
+      height:62%;
       transform-origin: top center;
       transform: rotateX(0deg);
-      transition: transform .85s cubic-bezier(.16,1,.3,1);
-      z-index: 6;
-      filter: drop-shadow(0 18px 22px rgba(0,0,0,.07));
+      transition: transform .95s cubic-bezier(.16,1,.3,1);
+      z-index:5;
+      filter: drop-shadow(0 16px 20px rgba(0,0,0,.09));
     }
     .flap::before{
       content:"";
       position:absolute;
       inset:0;
-      background: linear-gradient(180deg, #f6f1ea, #ece2d7);
+      background:
+        radial-gradient(circle at 50% 12%, rgba(255,255,255,.55), transparent 62%),
+        linear-gradient(180deg, #f9f0eb, #efd8ce);
       clip-path: polygon(0 0, 100% 0, 50% 92%);
       border-bottom: 1px solid rgba(0,0,0,.08);
     }
 
-    /* Envelope folds: simplified + symmetrical */
-    .folds{
+    /* Body geometry */
+    .body-shapes{
       position:absolute;
       inset:0;
+      z-index:1;
       pointer-events:none;
-      z-index:2;
     }
-    .folds::before,
-    .folds::after{
+    .body-shapes::before,
+    .body-shapes::after{
       content:"";
       position:absolute;
       inset:0;
-      border-radius: var(--r);
+      border-radius: var(--radius);
+      opacity:.92;
     }
-    .folds::before{
-      clip-path: polygon(0 100%, 0 40%, 50% 72%);
-      background: linear-gradient(135deg, rgba(255,255,255,.36), rgba(0,0,0,.02));
+    .body-shapes::before{
+      background:
+        radial-gradient(circle at 22% 60%, rgba(255,255,255,.35), transparent 55%),
+        linear-gradient(135deg, rgba(255,255,255,.36), transparent 62%);
+      clip-path: polygon(0 100%, 0 38%, 50% 70%);
       border-left: 1px solid rgba(0,0,0,.06);
-      opacity:.85;
     }
-    .folds::after{
-      clip-path: polygon(100% 100%, 100% 40%, 50% 72%);
-      background: linear-gradient(225deg, rgba(255,255,255,.32), rgba(0,0,0,.02));
+    .body-shapes::after{
+      background:
+        radial-gradient(circle at 78% 60%, rgba(255,255,255,.30), transparent 55%),
+        linear-gradient(225deg, rgba(255,255,255,.30), transparent 62%);
+      clip-path: polygon(100% 100%, 100% 38%, 50% 70%);
       border-right: 1px solid rgba(0,0,0,.06);
-      opacity:.85;
     }
 
-    .bottom{
+    .bottom-fold{
       position:absolute;
       left:0; right:0; bottom:0;
-      height: 58%;
+      height:58%;
+      z-index:2;
+      pointer-events:none;
+    }
+    .bottom-fold::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        radial-gradient(circle at 50% 15%, rgba(255,255,255,.26), transparent 62%),
+        linear-gradient(180deg, rgba(255,255,255,.08), rgba(0,0,0,.03));
+      clip-path: polygon(0 100%, 50% 35%, 100% 100%);
+      border-top: 1px solid rgba(0,0,0,.08);
+    }
+
+    /* Optional: tiny monogram line under seal */
+    .monogram{
+      position:absolute;
+      left:50%;
+      top: 63%;
+      transform: translateX(-50%);
+      width: 180px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(215,163,108,.55), transparent);
+      opacity:.8;
       z-index:3;
       pointer-events:none;
     }
-    .bottom::before{
-      content:"";
-      position:absolute;
-      inset:0;
-      clip-path: polygon(0 100%, 50% 35%, 100% 100%);
-      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(0,0,0,.03));
-      border-top: 1px solid rgba(0,0,0,.07);
-    }
 
-    /* Seal: smaller, refined, looks “pretty” */
+    /* Wax seal */
     .seal{
       position:absolute;
       left:50%;
-      top: 46%;
+      top:46%;
       transform: translate(-50%, -50%);
-      width: 84px;
-      height: 84px;
-      border-radius: 999px;
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
       background:
-        radial-gradient(circle at 35% 30%, rgba(255,255,255,.22), transparent 42%),
-        radial-gradient(circle at 70% 75%, rgba(0,0,0,.10), transparent 58%),
-        linear-gradient(180deg, var(--seal), var(--seal2));
-      box-shadow: 0 12px 26px rgba(0,0,0,.16);
-      border: 4px double rgba(255,255,255,.32);
+        radial-gradient(circle at 30% 28%, rgba(255,255,255,.22), transparent 40%),
+        radial-gradient(circle at 65% 78%, rgba(0,0,0,.18), transparent 55%),
+        radial-gradient(circle at 52% 50%, rgba(255,255,255,.09), transparent 58%),
+        linear-gradient(180deg, var(--wax1), var(--wax2));
+      box-shadow: 0 12px 30px rgba(155,58,74,.30);
+      border: 5px double rgba(255,255,255,.18);
       display:grid;
       place-items:center;
       cursor:pointer;
-      z-index: 9;
-      transition: transform .18s ease, opacity .35s ease;
+      z-index:8;
+      transition: transform .22s ease, opacity .45s ease, filter .22s ease;
       user-select:none;
     }
-    .seal:hover{ transform: translate(-50%, -50%) scale(1.04); }
+    .seal:hover{
+      transform: translate(-50%, -50%) scale(1.06);
+      filter: brightness(1.02);
+    }
+    .seal:active{ transform: translate(-50%, -50%) scale(1.02); }
 
     .seal span{
       font-family: "Cormorant Garamond", serif;
       font-weight: 600;
-      font-size: 1.75rem;
-      letter-spacing: .35px;
+      letter-spacing: .5px;
       color: rgba(255,255,255,.92);
-      text-shadow: 0 2px 0 rgba(0,0,0,.14);
+      font-size: 1.9rem;
+      text-shadow: 0 2px 0 rgba(0,0,0,.18);
     }
 
-    /* Letter slide */
+    /* Tiny “shine” ring */
+    .seal::after{
+      content:"";
+      position:absolute;
+      inset:10px;
+      border-radius:50%;
+      border: 1px solid rgba(255,255,255,.18);
+      opacity:.8;
+      pointer-events:none;
+    }
+
+    /* ===== Letter ===== */
     .letter{
-      position: relative;
-      width: min(470px, 88%);
-      margin: 0 auto;
-      padding-top: 24px;
-      transform: translateY(28%);
-      opacity: 0;
-      transition: transform .85s cubic-bezier(.16,1,.3,1), opacity .5s ease;
-      z-index: 5;
+      position:relative;
+      width:min(480px, 88%);
+      margin:0 auto;
+      transform: translateY(30%);
+      transition: transform .95s cubic-bezier(.16,1,.3,1), opacity .65s ease;
+      opacity:0;
+      z-index:4;
+      padding-top: 22px;
     }
 
     .paper{
-      background: linear-gradient(180deg, #ffffff, var(--paper));
-      border: 1px solid var(--paperEdge);
-      border-radius: 18px;
-      box-shadow: var(--shadow2);
-      padding: 34px 32px 22px;
-      position: relative;
+      background: linear-gradient(180deg, var(--paper1), var(--paper2));
+      border: 1px solid var(--paper-edge);
+      border-radius: 20px;
+      box-shadow: var(--shadow-soft);
+      padding: 30px 28px 22px;
+      position:relative;
       overflow:hidden;
     }
 
-    /* Elegant top border accent */
+    /* Paper watermark + deckled-ish corners illusion */
     .paper::before{
       content:"";
       position:absolute;
-      left:18px; right:18px; top:14px;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(201,174,134,.85), transparent);
-      opacity:.95;
+      inset:-2px;
+      background:
+        radial-gradient(circle at 22% 22%, rgba(215,163,108,.10), transparent 55%),
+        radial-gradient(circle at 80% 72%, rgba(199,122,131,.10), transparent 60%),
+        repeating-linear-gradient(0deg, rgba(0,0,0,.012) 0 1px, transparent 1px 10px);
+      opacity:.55;
+      pointer-events:none;
+    }
+    .paper::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      border-radius: 20px;
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.75),
+        inset 0 -1px 0 rgba(0,0,0,.04);
+      opacity:.9;
     }
 
     .heading{
       text-align:center;
       position:relative;
       z-index:1;
-      padding-top: 6px;
     }
-
-    .to{
-      margin:0;
-      font-family: "Cormorant Garamond", serif;
-      font-weight: 600;
+    .heading .to{
+      font-family:"Parisienne", cursive;
       font-size: 2.25rem;
-      letter-spacing: .2px;
-      color: rgba(31,31,31,.92);
-    }
-
-    .tagline{
-      margin: 8px 0 0;
-      font-size: .80rem;
-      letter-spacing: 1.1px;
-      text-transform: uppercase;
-      color: rgba(31,31,31,.50);
-      font-weight: 600;
+      margin:0;
+      color: var(--ink);
+      letter-spacing:.2px;
     }
 
     .divider{
-      width: 84px;
+      width: 74px;
       height: 1px;
-      margin: 18px auto 18px;
-      background: linear-gradient(90deg, transparent, rgba(159,182,170,.80), rgba(201,174,134,.85), transparent);
-      opacity: .95;
+      margin: 18px auto 16px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      opacity:.95;
+      position:relative;
+      z-index:1;
     }
 
     .message{
-      margin:0;
-      font-family: "Cormorant Garamond", serif;
-      font-size: 1.38rem;
-      line-height: 1.72;
+      font-family:"Cormorant Garamond", serif;
+      font-size: 1.36rem;
+      line-height: 1.68;
       text-align:center;
-      color: rgba(28,28,28,.86);
+      color: rgba(30,30,30,.84);
+      margin: 0;
+      position:relative;
+      z-index:1;
     }
 
     .signature{
-      margin-top: 18px;
+      margin-top: 16px;
       text-align:center;
-      font-size: .86rem;
-      letter-spacing: 1.2px;
-      text-transform: uppercase;
-      color: rgba(31,31,31,.56);
-      font-weight: 600;
+      font-family:"Parisienne", cursive;
+      font-size: 1.65rem;
+      color: rgba(43,43,43,.82);
+      position:relative;
+      z-index:1;
     }
 
+    /* Buttons */
     .tools{
       display:flex;
       justify-content:center;
       gap: 12px;
-      flex-wrap: wrap;
-      margin-top: 18px;
+      margin-top: 16px;
+      position:relative;
+      z-index:1;
+      flex-wrap:wrap;
     }
 
     .btn{
       appearance:none;
-      border: 1px solid rgba(201,174,134,.55);
-      background: rgba(255,255,255,.78);
-      color: rgba(31,31,31,.78);
+      border: 1px solid rgba(215,163,108,.60);
+      background: rgba(255,255,255,.72);
+      color: rgba(43,43,43,.82);
       padding: 10px 14px;
       border-radius: 999px;
       font-size: .82rem;
       letter-spacing: .6px;
       cursor:pointer;
-      transition: transform .12s ease, background .2s ease, border-color .2s ease;
-      backdrop-filter: blur(8px);
+      transition: transform .15s ease, background .25s ease, border-color .25s ease, box-shadow .25s ease;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 24px rgba(0,0,0,.06);
     }
     .btn:hover{
       transform: translateY(-1px);
-      background: rgba(201,174,134,.08);
-      border-color: rgba(159,182,170,.55);
+      background: rgba(215,163,108,.12);
+      border-color: rgba(199,122,131,.50);
+      box-shadow: 0 14px 30px rgba(0,0,0,.08);
     }
+
     .btn.primary{
-      background: linear-gradient(180deg, rgba(159,182,170,.14), rgba(201,174,134,.10));
-      border-color: rgba(159,182,170,.55);
+      background: linear-gradient(180deg, rgba(199,122,131,.18), rgba(215,163,108,.12));
+      border-color: rgba(199,122,131,.55);
     }
 
     .hint{
       text-align:center;
-      padding: 18px 16px 22px;
       font-size: .82rem;
-      color: rgba(31,31,31,.54);
+      color: rgba(43,43,43,.56);
+      padding: 18px 16px 22px;
       position:relative;
-      z-index:4;
+      z-index:3;
     }
-    .hint b{ color: rgba(31,31,31,.72); font-weight: 600; }
+    .hint b{ color: rgba(43,43,43,.76); font-weight: 500; }
 
     /* Open state */
     .is-open .flap{ transform: rotateX(-155deg); }
-    .is-open .seal{ opacity:0; transform: translate(-50%, -50%) scale(.94); pointer-events:none; }
-    .is-open .letter{ transform: translateY(-6%); opacity:1; }
+    .is-open .seal{ opacity:0; transform: translate(-50%, -50%) scale(.92); pointer-events:none; }
+    .is-open .letter{ transform: translateY(-7%); opacity:1; }
+    .is-open .envelope{ transform: translateY(2px); }
 
+    /* Reduce motion */
     @media (prefers-reduced-motion: reduce){
-      .flap, .seal, .letter{ transition:none !important; }
-      body::before{ display:none; }
+      .flap, .seal, .letter, .envelope{ transition:none !important; }
+      .sparkle{ animation:none !important; }
     }
   </style>
 </head>
 
 <body>
+  <div class="sparkle"></div>
+
   <div class="wrap">
     <div class="envelope" id="envelope">
       <div class="flap"></div>
-      <div class="folds"></div>
-      <div class="bottom"></div>
+      <div class="body-shapes"></div>
+      <div class="bottom-fold"></div>
 
-      <div class="seal" id="seal" onclick="unseal()" aria-label="Open the envelope" title="Open">
+      <div class="seal" id="seal" onclick="unseal()" aria-label="Unseal the envelope" title="Unseal">
         <span>J</span>
       </div>
+
+      <div class="monogram"></div>
 
       <div class="letter" id="letter" aria-hidden="true">
         <div class="paper">
           <div class="heading">
             <p class="to">For Jimmy</p>
-            <div class="tagline">a short note — from your friend</div>
           </div>
 
           <div class="divider"></div>
 
           <p class="message" id="noteText">
-            Just a small reminder that you’re not alone in this.<br>
-            I’m cheering you on, always.<br>
-            If you want to talk or take a breather, message me anytime.
+            Just a gentle reminder that you’re being thought of.<br>
+            I’m rooting for you, always.<br>
+            Text me anytime. I’m in your corner.
           </p>
 
           <div class="signature">— Aomsin</div>
@@ -364,7 +456,7 @@
       </div>
 
       <div class="hint" id="hint">
-        Tap the <b>seal</b> to open
+        Tap the <b>wax seal</b> to open your envelope ✨
       </div>
     </div>
   </div>
@@ -378,7 +470,7 @@
       env.classList.add('is-open');
       letter.setAttribute('aria-hidden', 'false');
       hint.style.opacity = '0';
-      setTimeout(() => (hint.style.display = 'none'), 240);
+      setTimeout(() => (hint.style.display = 'none'), 300);
     }
 
     function resetSeal(){
@@ -393,8 +485,15 @@
     }
 
     function copyNote(){
-      const note = document.getElementById('noteText').innerText.replace(/\n\n/g, "\n").trim();
-      navigator.clipboard.writeText(note).then(() => alert("Copied.")).catch(() => alert("Please copy manually."));
+      const note = document.getElementById('noteText').innerText
+        .replace(/\n\n/g, "\n")
+        .trim();
+
+      navigator.clipboard.writeText(note).then(() => {
+        alert("Copied. 💌");
+      }).catch(() => {
+        alert("Couldn’t copy automatically — please copy manually. 💗");
+      });
     }
   </script>
 </body>
